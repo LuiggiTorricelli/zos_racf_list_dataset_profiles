@@ -1,0 +1,33 @@
+{%- set result = [] -%}
+{%- set ns = namespace(iterator='', content=['']) -%}
+{%- set exclusive_attrs = ['dataset', 'id', 'prefix'] -%}
+{#- SETTING ITERATOR AND CONTENT IF EXISTS -#}
+{%- for attr in __input_parameters -%}
+    {%- if attr in exclusive_attrs -%}
+        {%- set ns.iterator = attr -%}
+        {%- set ns.content = [ __input_parameters[attr] ] if __input_parameters[attr] is string else __input_parameters[attr] -%}
+    {%- endif -%}
+{%- endfor -%}
+{#- SETTING UP THE COMMAND LIST -#}
+{%- for elem in ns.content -%}
+    {%- set command = ['LISTDSD'] -%}
+    {%- if elem != '' and ns.iterator != '' -%}
+        {{- command.append(ns.iterator | upper + '(' + (("'" + elem + "'") if ns.iterator == 'dataset' else elem) | upper + ')') -}}
+    {%- endif -%}
+    {%- for attr in __input_parameters if attr not in exclusive_attrs -%}
+        {%- if attr == 'generic' -%}
+            {{- command.append(attr | upper if __input_parameters[attr] == True else 'NO' + attr | upper) -}}
+        {%- elif attr == 'volume' -%}
+            {%- set volume = __input_parameters[attr] -%}
+            {{- command.append(attr | upper + '(' + (volume if volume is string else volume | join(' ')) | upper + ')') -}}
+        {%- elif attr == 'at' -%}
+            {{- command.append(attr | upper + '(' + __input_parameters[attr] | upper + ')') -}}
+        {%- else -%}
+            {%- if __input_parameters[attr] in [True] -%}
+                {{- command.append(attr | upper) -}}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {{- result.append(command | join(' ')) -}}
+{%- endfor -%}
+{{- result -}}

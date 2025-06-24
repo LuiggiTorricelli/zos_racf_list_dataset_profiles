@@ -1,0 +1,33 @@
+---
+- name: "Assert that input variables were informed correctly"
+  ansible.builtin.assert:
+    that:
+      - (parameters is not string) and (parameters is iterable) and (parameters is mapping)
+      - show_output is boolean
+    success_msg: "SUCCESS: The input variables were informed successfully!"
+    fail_msg: "ERROR: One or more input variables were wrongly informed. Make sure there are no extra spaces on the variables."
+    quiet: true
+
+- name: "Execute templated RACF command based on input parameters"
+  ibm.ibm_zos_core.zos_tso_command:
+    commands: "{{ lookup('template', 'listdsd.j2') }}"
+  register: zos_tso_command_output_listdsd
+  failed_when: false
+  changed_when: false
+  vars:
+    __input_parameters: "{{ parameters | zos_racf_list_dataset_profiles_validate_input }}"
+
+- name: "If return code is greater than 4, fail and display the entire output"
+  ansible.builtin.debug:
+    msg: "{{ zos_tso_command_output_listdsd }}"
+  when: zos_tso_command_output_listdsd.output | selectattr('rc', 'gt', 4) | list | length > 0
+  failed_when: zos_tso_command_output_listdsd.output | selectattr('rc', 'gt', 4) | list | length > 0
+
+- name: "Set fact contaning the parsed details."
+  ansible.builtin.set_fact:
+    zos_racf_list_dataset_profiles_details: "{{ zos_tso_command_output_listdsd.output | zos_racf_list_dataset_profiles_parse_listdsd }}"
+
+- name: "Display details content if show_output is true."
+  ansible.builtin.debug:
+    msg: "{{ zos_racf_list_dataset_profiles_details }}"
+  when: show_output

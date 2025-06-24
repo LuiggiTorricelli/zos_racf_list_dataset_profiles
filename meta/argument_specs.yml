@@ -1,0 +1,16 @@
+---
+argument_specs:
+  main:
+    short_description: "Main set of tasks of the role audit-racf_list_dataset_profiles-zos"
+    author: "Luiggi Torricelli"
+    options:
+      parameters:
+        default: {}
+        description: "An object containing parameters to be used on the RACF command"
+        required: false
+        type: "dict"
+      show_output:
+        default: true
+        description: "A boolean to determine if output should be displayed or not at the end"
+        required: false
+        type: "bool"

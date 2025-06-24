@@ -1,0 +1,15 @@
+galaxy_info:
+  role_name: "audit-racf_list_dataset_profiles-zos"
+  author: "Luiggi Torricelli"
+  description: "This Ansible role will perform the RACF command LISTDSD against one or more data set profiles and parse the output into a JSON object"
+  license: "Apache-2.0"
+  min_ansible_version: "2.9"
+  galaxy_tags:
+    - zos
+    - mainframe
+    - racf
+    - list
+    - dataset
+collections:
+  - ibm.ibm_zos_core
+dependencies: []
