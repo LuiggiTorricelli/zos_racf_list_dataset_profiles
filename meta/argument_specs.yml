@@ -1,7 +1,7 @@
 ---
 argument_specs:
   main:
-    short_description: "Main set of tasks of the role audit-racf_list_dataset_profiles-zos"
+    short_description: "Main set of tasks of the role zos_racf_list_dataset_profiles"
     author: "Luiggi Torricelli"
     options:
       parameters:
