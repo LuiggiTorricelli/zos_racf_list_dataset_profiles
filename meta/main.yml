@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: "audit-racf_list_dataset_profiles-zos"
+  role_name: "zos_racf_list_dataset_profiles"
   author: "Luiggi Torricelli"
   description: "This Ansible role will perform the RACF command LISTDSD against one or more data set profiles and parse the output into a JSON object"
   license: "Apache-2.0"
