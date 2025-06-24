@@ -181,7 +181,7 @@ A fact named `zos_racf_list_dataset_profiles_details` will be set if the role ru
 
 ## License
 
-This role is licensed under licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+This role is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 ## Author Information
 
