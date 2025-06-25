@@ -57,7 +57,7 @@ class FilterModule(object):
             elif isinstance(input_content[attr], list) and len(input_content[attr]) == 0:
                 error_msgs.append(f"Attribute '{attr}' was informed as an empty list. Either inform the proper valeus or do not inform this attribute.")
             elif attr in ['dataset', 'prefix']:
-                regex_dataset = r"^((?:[a-zA-Z@#$\*][a-zA-Z@#$0-9\*]{0,7}(?:\.(?!$)|$)){1,8})$"
+                regex_dataset = r"^((?:[a-zA-Z@#$\*%][a-zA-Z@#$0-9\*%]{0,7}(?:\.(?!$)|$)){1,8})$"
                 tmp_list = [input_content[attr]] if not isinstance(input_content[attr], list) else input_content[attr]
                 for dsn in tmp_list:
                     if not re.match(regex_dataset, dsn):
